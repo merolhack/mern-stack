@@ -17,9 +17,9 @@ const turnSchema = new mongoose.Schema({
     },
     window: {
         type: Number,
-        required: true,
+        required: false,
     },
-    mobileCreated: {
+    mobileDateCreated: {
         type: Date,
     },
     reset: {

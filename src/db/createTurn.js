@@ -3,7 +3,7 @@
  */
 const TurnModel = require('./models/turn');
 
-const createTurn = (turn, query, client, payload) => {
+const createTurn = (turn, query, io, payload) => {
     TurnModel.create(turn)
         .then(() => {
             return TurnModel.findOne(query).sort({counter: -1});
@@ -11,9 +11,9 @@ const createTurn = (turn, query, client, payload) => {
         .then((document) => {
             console.log('Document:', document);
             let createdPayload = payload;
-            createdPayload.counter = latestTurn;
+            createdPayload.counter = document.counter;
             console.log('createdPayload:', createdPayload);
-            client.emit('turn-created', createdPayload);
+            io.sockets.emit('turn-created', createdPayload);
         });
 };
 

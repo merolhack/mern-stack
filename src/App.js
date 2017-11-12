@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { subscribeToCurrentTurn } from './api';
+import { getCurrentTurn, subscribeToCurrentTurn } from './api';
 
 class App extends Component {
   state = {
-    currentTurn: null
+    currentTurn: 0
   };
 
   constructor(props) {
     super(props);
-    subscribeToCurrentTurn((err, currentTurn) => this.setState({ 
-      currentTurn 
-    }));
+
+    getCurrentTurn((payload) => {
+      this.setState({
+        currentTurn: payload.counter,
+      });
+    });
+
+    subscribeToCurrentTurn((err, payload) => {
+      console.log('currentTurn:', payload);
+      this.setState({
+        currentTurn: payload.counter,
+      });
+    });
   }
 
   render() {
